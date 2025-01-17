@@ -1,0 +1,10 @@
+# Byte-compiled
+__pycache__/
+
+# ruff
+.ruff_cache/
+
+# Static type checkers
+.mypy_cache/
+
+
