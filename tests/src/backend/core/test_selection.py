@@ -1,7 +1,7 @@
-from pytest_mock import MockerFixture
-from src.backend.core._selection import Selection
-
 import pytest
+
+from src.backend.core import Selection, Engine
+from tests.fixtures.selection import selection, engine, selection_check_index
 
 
 class TestSelection:
@@ -23,31 +23,26 @@ class TestSelection:
     def test_start_getter(self, selection: Selection) -> None:
         assert selection.start == self.SELECTION_START_AFTER_CREATION
 
-    def test_start_setter(self, mocker: MockerFixture, selection: Selection) -> None:
-        selection._check_index = mocker.Mock(return_value=None)  # type: ignore[method-assign]
-        selection.start = self.SELECTION_START
-        assert selection.start == self.SELECTION_START
+    def test_start_setter(self, selection_check_index: Selection) -> None:
+        selection_check_index.start = self.SELECTION_START
+        assert selection_check_index.start == self.SELECTION_START
 
     def test_end_getter(self, selection: Selection) -> None:
         assert selection.end == self.SELECTION_START_AFTER_CREATION
 
-    def test_end_setter(self, mocker: MockerFixture, selection: Selection) -> None:
-        selection._check_index = mocker.Mock(return_value=None)  # type: ignore[method-assign]
-        selection.end = self.SELECTION_END
-        assert selection.end == self.SELECTION_END + 1
+    def test_end_setter(self, selection_check_index: Selection) -> None:
+        selection_check_index.end = self.SELECTION_END
+        assert selection_check_index.end == self.SELECTION_END + 1
+
+    def test_engine(self, selection: Selection) -> None:
+        assert isinstance(selection.engine, Engine)
 
     def test_buffer_start(self, selection: Selection) -> None:
         assert selection.buffer_start == self.SELECTION_START_AFTER_CREATION
 
-    def test_buffer_end(self, mocker: MockerFixture) -> None:
-        expected = "I'm buffer"
-        engine = mocker.patch("src.backend.core.Engine", autospec=True)
-        engine = engine.return_value
-        p = mocker.PropertyMock(return_value=expected)
-        type(engine).buffer = p
-
+    def test_buffer_end(self, engine: Engine) -> None:
         sut = Selection(engine=engine)
-        assert sut.buffer_end == len(expected)
+        assert sut.buffer_end == len(sut.engine.buffer)
 
     @pytest.mark.parametrize("index", [-2, BUFFER_END_NON_EMPTY_TEXT + 1])
     @pytest.mark.parametrize(

@@ -1,5 +1,7 @@
 import pytest
+
 from src.backend.core import Engine, Selection
+from tests.fixtures.engine import engine  # noqa: F401
 
 
 class TestEngine:
@@ -25,7 +27,9 @@ class TestEngine:
         assert isinstance(engine.clipboard, str)
 
     @pytest.mark.parametrize(
-        "engine", [SAME_START_INDEX, SAME_MIDDLE_INDEX, SAME_END_INDEX], indirect=True
+        "engine",
+        [SAME_START_INDEX, SAME_MIDDLE_INDEX, SAME_END_INDEX],
+        indirect=True,
     )
     def test_copy_same_index(self, engine: Engine) -> None:
         engine.copy()
@@ -37,7 +41,9 @@ class TestEngine:
         assert engine.clipboard == "content"
 
     @pytest.mark.parametrize(
-        "engine", [SAME_START_INDEX, SAME_MIDDLE_INDEX, SAME_END_INDEX], indirect=True
+        "engine",
+        [SAME_START_INDEX, SAME_MIDDLE_INDEX, SAME_END_INDEX],
+        indirect=True,
     )
     def test_update_empty_text_same_index(self, engine: Engine) -> None:
         engine._update()
