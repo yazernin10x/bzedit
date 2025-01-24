@@ -27,9 +27,9 @@ class AbstractEngine(ABC, metaclass=Meta):
     ----------
     selection : Selection
         Provides selection control to manage portions of text in the buffer.
-    content : str
+    buffer : str
         Provides access to the content of the buffer.
-    clipboard_content : str
+    clipboard : str
         Provides access to the content of the clipboard.
 
     Methods
@@ -65,7 +65,7 @@ class AbstractEngine(ABC, metaclass=Meta):
 
     @property
     @abstractmethod
-    def content(self) -> str:
+    def buffer(self) -> str:
         """Access the buffer's content.
 
         The buffer temporarily stores the text to allow operations such as
@@ -80,7 +80,7 @@ class AbstractEngine(ABC, metaclass=Meta):
 
     @property
     @abstractmethod
-    def clipboard_content(self) -> str:
+    def clipboard(self) -> str:
         """Access the clipboard's content.
 
         The clipboard temporarily stores text for copy, cut, and paste

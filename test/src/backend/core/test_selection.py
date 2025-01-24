@@ -1,3 +1,4 @@
+from pytest_mock import MockerFixture
 from src.backend.core._selection import Selection
 
 import pytest

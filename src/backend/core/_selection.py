@@ -55,7 +55,7 @@ class Selection(AbstractSelection):
         content = self._engine.content
         return (len(content) - 1) if content else 0
 
-    def _check_index(self, index: int):
+    def _check_index(self, index: int) -> None:
         stack = inspect.stack()
         caller = stack[1].function
         if (index < 0) or (index < self.buffer_begin) or (index > self.buffer_end):
