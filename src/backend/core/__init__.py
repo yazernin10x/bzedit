@@ -1,4 +1,4 @@
-from src.utils import reassign_module_names
+from backend.utils import reassign_module_names
 from ._meta import Meta
 from ._meta import DocstringInheritanceMeta
 from ._abstractengine import AbstractEngine

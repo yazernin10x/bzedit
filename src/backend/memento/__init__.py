@@ -1,4 +1,4 @@
-from src.utils import reassign_module_names
+from backend.utils import reassign_module_names
 
 from ._abstractmemento import AbstractMemento
 from ._memento import Memento, NullMemento
