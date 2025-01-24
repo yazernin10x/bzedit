@@ -1,5 +1,5 @@
 from src.utils import reassign_module_names
-from ._command import AbstractCommand
+from ._abstractcommand import AbstractCommand
 from ._copy import Copy
 from ._cut import Cut
 from ._delete import Delete
