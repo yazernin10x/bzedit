@@ -8,12 +8,9 @@ Classes
 """
 
 from __future__ import annotations
-from abc import ABC, ABCMeta, abstractmethod
+from abc import ABC, abstractmethod
 
-from src.backend.core._meta import DocstringInheritanceMeta
-
-
-class Meta(ABCMeta, DocstringInheritanceMeta): ...
+from src.backend.core import Meta
 
 
 class AbstractEngine(ABC, metaclass=Meta):

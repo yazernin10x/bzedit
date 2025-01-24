@@ -1,3 +1,5 @@
+from src.utils import reassign_module_names
+from ._meta import Meta
 from ._meta import DocstringInheritanceMeta
 from ._abstractengine import AbstractEngine
 from ._abstractselection import AbstractSelection
@@ -10,9 +12,7 @@ __all__ = [
     "AbstractSelection",
     "Selection",
     "Engine",
+    "Meta",
 ]
 
-# Adjust __module__ to show objects as part of the current package
-for value in list(locals().values()):
-    if getattr(value, "__module__", "").startswith(__name__):
-        value.__module__ = __name__
+reassign_module_names()

@@ -6,12 +6,10 @@ Classes
     Abstract base class for managing text selection and buffer boundaries.
 """
 
-from abc import ABC, ABCMeta, abstractmethod
+from __future__ import annotations
+from abc import ABC, abstractmethod
 
-from src.backend.core._meta import DocstringInheritanceMeta
-
-
-class Meta(ABCMeta, DocstringInheritanceMeta): ...
+from src.backend.core import Meta
 
 
 class AbstractSelection(ABC, metaclass=Meta):
@@ -23,10 +21,16 @@ class AbstractSelection(ABC, metaclass=Meta):
     ----------
     start : int
         Get or set the index of the first character in the selection.
+
     end : int
         Get or set the index of the first character after the selection.
+
+    engine: Engine
+        Provide the editor's engine used by the selection
+
     buffer_start : int
         Get the index of the first character in the buffer.
+
     buffer_end : int
         Get the index of the first "virtual" character after the buffer.
     """
@@ -74,6 +78,18 @@ class AbstractSelection(ABC, metaclass=Meta):
     @end.setter
     @abstractmethod
     def end(self, index: int) -> None: ...
+
+    @property
+    @abstractmethod
+    def engine(self) -> Engine:
+        """Provide the editor's engine.
+
+        Returns
+        -------
+        Engine
+            The editor's engine used by the selection
+        """
+        ...
 
     @property
     @abstractmethod

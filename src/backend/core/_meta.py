@@ -1,5 +1,7 @@
 """Define metaclass"""
 
+from abc import ABCMeta
+
 
 class DocstringInheritanceMeta(type):
     def __new__(cls, name, bases, dct):
@@ -10,3 +12,6 @@ class DocstringInheritanceMeta(type):
                         attr_value.__doc__ = base_attr.__doc__
 
         return super().__new__(cls, name, bases, dct)
+
+
+class Meta(ABCMeta, DocstringInheritanceMeta): ...

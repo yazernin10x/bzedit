@@ -46,6 +46,10 @@ class Selection(AbstractSelection):
         self._end = index + 1
 
     @property
+    def engine(self) -> Engine:
+        return self._engine
+
+    @property
     def buffer_start(self) -> int:
         return 0
 
