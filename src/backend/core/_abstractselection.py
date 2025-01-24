@@ -21,11 +21,11 @@ class AbstractSelection(ABC, metaclass=Meta):
 
     Properties
     ----------
-    begin : int
+    start : int
         Get or set the index of the first character in the selection.
     end : int
         Get or set the index of the first character after the selection.
-    buffer_begin : int
+    buffer_start : int
         Get the index of the first character in the buffer.
     buffer_end : int
         Get the index of the first "virtual" character after the buffer.
@@ -33,7 +33,7 @@ class AbstractSelection(ABC, metaclass=Meta):
 
     @property
     @abstractmethod
-    def begin(self) -> int:
+    def start(self) -> int:
         """Get or set the index of the first character in the selection.
 
         Returns
@@ -49,9 +49,9 @@ class AbstractSelection(ABC, metaclass=Meta):
         """
         ...
 
-    @begin.setter
+    @start.setter
     @abstractmethod
-    def begin(self, index: int) -> None: ...
+    def start(self, index: int) -> None: ...
 
     @property
     @abstractmethod
@@ -73,11 +73,11 @@ class AbstractSelection(ABC, metaclass=Meta):
 
     @end.setter
     @abstractmethod
-    def end(self, index) -> None: ...
+    def end(self, index: int) -> None: ...
 
     @property
     @abstractmethod
-    def buffer_begin(self) -> int:
+    def buffer_start(self) -> int:
         """Get the index of the first character in the buffer.
 
         Returns
