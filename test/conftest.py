@@ -1,35 +1,41 @@
 """Define global fixtures"""
 
-from unittest.mock import PropertyMock, patch
+from typing import Generator
 
 import pytest
+from pytest_mock import MockerFixture
 
-from src.backend.core._selection import Selection
+from backend.core import Engine, Selection
 
 
 @pytest.fixture
-def engine(mocker, request):
+def engine(mocker: MockerFixture, request: pytest.FixtureRequest) -> Generator[Engine]:
+    path = "src.backend.core.Selection"
+    mock_start = mocker.patch(f"{path}.start", new_callable=mocker.PropertyMock)
+    mock_end = mocker.patch(f"{path}.end", new_callable=mocker.PropertyMock)
+    if hasattr(request, "param"):
+        mock_start.return_value = request.param[0]
+        mock_end.return_value = request.param[1]
+
+    sut = Engine()
+    sut._buffer = "I'm content in the buffer"
+    yield sut
+
+
+@pytest.fixture
+def selection(
+    mocker: MockerFixture, request: pytest.FixtureRequest
+) -> Generator[Selection]:
     engine = mocker.patch("src.backend.core.Engine", autospec=True)
     engine = engine.return_value
 
     if hasattr(request, "param"):
-        p = PropertyMock(return_value=f"{request.param}")
-        type(engine).content = p
+        mock_buffer_end = mocker.patch(
+            "src.backend.core.Selection.buffer_end", new_callable=mocker.PropertyMock
+        )
+        mock_buffer_end.return_value = request.param[0]
 
-    yield engine
+        p = mocker.PropertyMock(return_value=f"{request.param[1]}")
+        type(engine).buffer = p
 
-
-@pytest.fixture
-def selection(engine):
-    selection_path = "src.backend.core.Selection"
-    with (
-        patch(
-            f"{selection_path}.buffer_begin", new_callable=PropertyMock
-        ) as mock_buffer_begin,
-        patch(
-            f"{selection_path}.buffer_end", new_callable=PropertyMock
-        ) as mock_buffer_end,
-    ):
-        mock_buffer_begin.return_value = 10
-        mock_buffer_end.return_value = 100
-        yield Selection(engine=engine)
+    yield Selection(engine=engine)
