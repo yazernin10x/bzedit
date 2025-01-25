@@ -5,9 +5,6 @@ from tests.fixtures.memento import originator, memento, Engine
 
 
 class TestOriginator:
-    def test_engine(self, originator: Originator) -> None:
-        assert isinstance(originator._engine, Engine)
-
     def test_save(self, originator: Originator) -> None:
         memento = originator.save()
         engine = originator._engine

@@ -12,7 +12,7 @@ class Copy(AbstractCommand):
         Build the command
     """
 
-    def __init__(self, engine: Engine, start: int, end: int) -> None:
+    def __init__(self, engine: Engine, start: int = 0, end: int = 0) -> None:
         """Build the command
 
         Parameters
@@ -20,10 +20,10 @@ class Copy(AbstractCommand):
         engine : Engine
             The editor engine from which to copy the text.
 
-        begin : int
+        start : int, default 0
             The start index of the selection to copy.
 
-        end : int
+        end : int, default 0
             The end index of the selection to copy.
 
         Raises

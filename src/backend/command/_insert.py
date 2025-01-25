@@ -12,18 +12,23 @@ class Insert(AbstractCommand):
         Build the command
     """
 
-    def __init__(self, engine: Engine, text: str, start: int, end: int) -> None:
+    def __init__(
+        self, engine: Engine, text: str = "", start: int = 0, end: int = 0
+    ) -> None:
         """Build the command
 
         Parameters
         ----------
         engine : Engine
             The editor engine from which to insert the text.
-        text: str
+
+        text: str, default ""
             The text to insert into the editor's buffer.
-        begin : int
+
+        start : int, default 0
             The start index of the selection to insert.
-        end : int
+
+        end : int, default 0
             The end index of the selection to insert.
 
         Raises
