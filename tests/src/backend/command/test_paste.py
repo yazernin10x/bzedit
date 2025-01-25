@@ -14,7 +14,7 @@ class TestPaste:
             Paste(None, 1, 1)
 
     @pytest.mark.parametrize("engine", [BUFFER], indirect=True)
-    def test_not_none_engine(self, mocker: MockFixture, engine: Engine) -> None:
+    def test_execute(self, mocker: MockFixture, engine: Engine) -> None:
         mocker.patch.object(engine, "_clipboard", " from the clipboard ")
         Paste(engine, 10, 10).execute()
         assert engine.buffer == "Paste text from the clipboard to the buffer."

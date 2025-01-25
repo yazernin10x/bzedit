@@ -10,10 +10,10 @@ class TestCopy:
 
     def test_none_engine(self) -> None:
         with pytest.raises(ValueError, match="engine is required"):
-            Copy(None, 1, 1)
+            Copy(None)
 
     @pytest.mark.parametrize("engine", [BUFFER], indirect=True)
-    def test_not_none_engine(self, engine: Engine) -> None:
+    def test_execute(self, engine: Engine) -> None:
         Copy(engine, 5, 11).execute()
         assert engine.clipboard == "text to"
         assert engine.buffer == self.BUFFER

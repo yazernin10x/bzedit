@@ -10,10 +10,10 @@ class TestDelete:
 
     def test_none_engine(self) -> None:
         with pytest.raises(ValueError, match="engine is required"):
-            Delete(None, 1, 1)
+            Delete(None)
 
     @pytest.mark.parametrize("engine", [BUFFER], indirect=True)
-    def test_not_none_engine(self, engine: Engine) -> None:
+    def test_execute(self, engine: Engine) -> None:
         Delete(engine, 15, len(self.BUFFER) - 2).execute()
         assert engine.clipboard == ""
         assert engine.buffer == "Delete the text."

@@ -13,7 +13,7 @@ class TestInvoker:
             Invoker.invoke(None)
 
     @pytest.mark.parametrize("engine", [BUFFER], indirect=True)
-    def test_not_none_command(self, engine: Engine) -> None:
+    def test_execute(self, engine: Engine) -> None:
         Invoker.invoke(Copy(engine, 5, 11))
         assert engine.clipboard == "text to"
         assert engine.buffer == self.BUFFER
