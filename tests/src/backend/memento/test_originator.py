@@ -1,7 +1,5 @@
-import pytest
-
 from src.backend.memento import Originator, Memento
-from tests.fixtures.memento import originator, memento, Engine
+from tests.fixtures.memento import originator, memento, engine
 
 
 class TestOriginator:

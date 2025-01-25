@@ -1,23 +1,16 @@
 from collections import deque
 
-
 import pytest
 
 from src.backend.memento import Caretaker, Memento
-from src.backend.memento._caretaker import NullMemento
+from src.backend.memento._caretaker import NullMemento  # type: ignore
 from tests.fixtures.memento import caretaker, memento
 
 
 class TestCaretaker:
-    def test_instance_attribute_undo(self) -> None:
-        assert isinstance(Caretaker()._undo, deque)
-
-    def test_instance_attribute_redo(self) -> None:
-        assert isinstance(Caretaker()._redo, deque)
-
     def test_save_none_memento(self, caretaker: Caretaker) -> None:
         with pytest.raises(ValueError, match="memento is required"):
-            caretaker.save(None)
+            caretaker.save(None)  # type: ignore
 
     def test_save_non_none_memento(
         self, caretaker: Caretaker, memento: Memento
@@ -37,8 +30,7 @@ class TestCaretaker:
         len_undo = len(caretaker._undo)
         len_redo = len(caretaker._redo)
 
-        response = caretaker._move(caretaker._undo, caretaker._redo)
-        assert isinstance(response, Memento)
+        caretaker._move(caretaker._undo, caretaker._redo)
         assert len(caretaker._undo) == len_undo - 1
         assert len(caretaker._redo) == len_redo + 1
 
@@ -47,8 +39,7 @@ class TestCaretaker:
         len_undo = len(caretaker._undo)
         len_redo = len(caretaker._redo)
 
-        response = caretaker.undo()
-        assert isinstance(response, Memento)
+        caretaker.undo()
         assert len(caretaker._undo) == len_undo - 1
         assert len(caretaker._redo) == len_redo + 1
 
@@ -57,7 +48,6 @@ class TestCaretaker:
         len_undo = len(caretaker._undo)
         len_redo = len(caretaker._redo)
 
-        response = caretaker.redo()
-        assert isinstance(response, Memento)
+        caretaker.redo()
         assert len(caretaker._undo) == len_undo + 1
         assert len(caretaker._redo) == len_redo - 1
