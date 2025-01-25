@@ -1,7 +1,7 @@
 import pytest
 
 from src.backend.core import Selection, Engine
-from tests.fixtures.selection import selection, engine, selection_check_index
+from tests.fixtures.selection import selection, engine
 
 
 class TestSelection:
@@ -23,16 +23,8 @@ class TestSelection:
     def test_start_getter(self, selection: Selection) -> None:
         assert selection.start == self.SELECTION_START_AFTER_CREATION
 
-    def test_start_setter(self, selection_check_index: Selection) -> None:
-        selection_check_index.start = self.SELECTION_START
-        assert selection_check_index.start == self.SELECTION_START
-
     def test_end_getter(self, selection: Selection) -> None:
         assert selection.end == self.SELECTION_START_AFTER_CREATION
-
-    def test_end_setter(self, selection_check_index: Selection) -> None:
-        selection_check_index.end = self.SELECTION_END
-        assert selection_check_index.end == self.SELECTION_END + 1
 
     def test_engine(self, selection: Selection) -> None:
         assert isinstance(selection.engine, Engine)
@@ -50,6 +42,7 @@ class TestSelection:
         [(BUFFER_END_EMPTY_TEXT, ""), (BUFFER_END_NON_EMPTY_TEXT, TEXT)],
         indirect=True,
     )
+    @pytest.mark.dependency(name="outbound")
     def test_check_index_outbound(self, selection: Selection, index: int) -> None:
         """Test the out-of-bounds index."""
 
@@ -62,6 +55,7 @@ class TestSelection:
         [(BUFFER_END_EMPTY_TEXT, ""), (BUFFER_END_NON_EMPTY_TEXT, TEXT)],
         indirect=True,
     )
+    @pytest.mark.dependency(name="zero")
     def test_check_index_empty_buffer_zero_index(
         self, selection: Selection, index: int
     ) -> None:
@@ -72,8 +66,19 @@ class TestSelection:
     @pytest.mark.parametrize(
         "selection", [(BUFFER_END_NON_EMPTY_TEXT, TEXT)], indirect=True
     )
+    @pytest.mark.dependency(name="inbound")
     def test_check_index_empty_buffer_positive_inbound(
         self, selection: Selection, index: int
     ) -> None:
         """Test the index located within the buffer's index range."""
         assert selection._check_index(index) is None  # type: ignore[func-returns-value]
+
+    @pytest.mark.dependency(depends=["outbound", "zero", "inbound"])
+    def test_start_setter(self, selection: Selection) -> None:
+        selection.start = self.SELECTION_START
+        assert selection.start == self.SELECTION_START
+
+    @pytest.mark.dependency(depends=["outbound", "zero", "inbound"])
+    def test_end_setter(self, selection: Selection) -> None:
+        selection.end = self.SELECTION_END
+        assert selection.end == self.SELECTION_END + 1
