@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from backend.memento import AbstractOriginator
-from backend.memento import Memento
+from src.backend.memento import AbstractOriginator
+from src.backend.memento import Memento
 
 
 class Originator(AbstractOriginator):

@@ -15,4 +15,4 @@ __all__ = [
     "Meta",
 ]
 
-reassign_module_names()
+reassign_module_names(__name__, locals())

@@ -1,7 +1,7 @@
 from collections import deque
 from typing import Deque
 
-from backend.memento import AbstractMemento, AbstractCaretaker, NullMemento
+from src.backend.memento import AbstractMemento, AbstractCaretaker, NullMemento
 
 
 class Caretaker(AbstractCaretaker):
@@ -30,7 +30,6 @@ class Caretaker(AbstractCaretaker):
 
         self._redo.clear()
         self._undo.append(memento)
-        ...
 
     def undo(self) -> AbstractMemento:
         return self._move(self._undo, self._redo)

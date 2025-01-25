@@ -2,6 +2,8 @@
 
 from abc import ABCMeta
 
+# mypy: disallow-untyped-defs = false
+
 
 class DocstringInheritanceMeta(type):
     def __new__(cls, name, bases, dct):

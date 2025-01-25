@@ -24,8 +24,10 @@ class AbstractEngine(ABC, metaclass=Meta):
     ----------
     selection : Selection
         Provides selection control to manage portions of text in the buffer.
+
     buffer : str
         Provides access to the content of the buffer.
+
     clipboard : str
         Provides access to the content of the clipboard.
 
