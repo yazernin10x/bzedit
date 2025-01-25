@@ -10,12 +10,6 @@ from src.backend.core import Engine
 
 
 @pytest.fixture
-def null_memento(mocker: MockerFixture) -> Generator[Memento]:
-    null_mem = mocker.patch("src.backend.memento.NullMemento", autospec=True)
-    yield null_mem.return_value
-
-
-@pytest.fixture
 def memento(mocker: MockerFixture) -> Generator[Memento]:
     mem = mocker.patch("src.backend.memento.Memento", autospec=True)
     mem = mem.return_value
@@ -34,9 +28,14 @@ def caretaker(mocker: MockerFixture, memento: Memento) -> Generator[Caretaker]:
 
 
 @pytest.fixture
-def originator(mocker: MockerFixture) -> Generator[Engine]:
+def engine() -> Generator[Engine]:
     engine = Engine()
     engine._buffer = "I'm buffer"
     engine.selection.start = 1
     engine.selection.end = 3
+    yield engine
+
+
+@pytest.fixture
+def originator(engine: Engine) -> Generator[Originator]:
     yield Originator(engine)
