@@ -8,3 +8,8 @@ __pycache__/
 .mypy_cache/
 
 
+# Unit test / coverage reports
+.tox
+.htmlcov/
+.coverage*
+.pytest_cache/
