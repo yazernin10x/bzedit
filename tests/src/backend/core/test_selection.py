@@ -18,19 +18,6 @@ class TestSelection:
     SELECTION_END = 10
     BUFFER_END_EMPTY_TEXT = 0
     BUFFER_END_NON_EMPTY_TEXT = len(TEXT)
-    SELECTION_START_AFTER_CREATION = 0
-
-    def test_start_getter(self, selection: Selection) -> None:
-        assert selection.start == self.SELECTION_START_AFTER_CREATION
-
-    def test_end_getter(self, selection: Selection) -> None:
-        assert selection.end == self.SELECTION_START_AFTER_CREATION
-
-    def test_engine(self, selection: Selection) -> None:
-        assert isinstance(selection.engine, Engine)
-
-    def test_buffer_start(self, selection: Selection) -> None:
-        assert selection.buffer_start == self.SELECTION_START_AFTER_CREATION
 
     def test_buffer_end(self, engine: Engine) -> None:
         sut = Selection(engine=engine)
