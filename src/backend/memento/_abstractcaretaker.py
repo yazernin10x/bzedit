@@ -32,6 +32,11 @@ class AbstractCaretaker(ABC, metaclass=Meta):
         ----------
         memento : AbstractMemento
             The memento representing the editor's state to be saved.
+
+        Raises
+        ------
+        ValueError
+            if `memento` is None.
         """
         ...
 
