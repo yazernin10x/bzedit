@@ -30,13 +30,3 @@ def selection(
         engine.buffer = request.param[1]
 
     yield Selection(engine=engine)
-
-
-@pytest.fixture
-def selection_check_index(
-    mocker: MockerFixture, engine: MockerFixture
-) -> Generator[Selection]:
-    selection = Selection(engine=engine)
-    selection._check_index = mocker.Mock(return_value=None)
-
-    yield selection
