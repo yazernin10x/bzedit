@@ -17,4 +17,4 @@ class TestOriginator:
         selection = originator._engine.selection
         assert memento.buffer == engine.buffer
         assert memento.start == selection.start
-        assert memento.end + 1 == selection.end
+        assert memento.end == selection.end
