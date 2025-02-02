@@ -24,11 +24,21 @@ class Caretaker(AbstractCaretaker):
         self._undo: Deque[AbstractMemento] = deque()
         self._redo: Deque[AbstractMemento] = deque()
 
+    def is_undo(self) -> bool:
+        return bool(self._undo)
+
+    def is_redo(self) -> bool:
+        return bool(self._redo)
+
     def save(self, memento: AbstractMemento) -> None:
         if memento is None:
             raise ValueError("memento is required.")
 
         self._redo.clear()
+
+        if self._undo and self._undo[-1] == memento:
+            return
+
         self._undo.append(memento)
 
     def undo(self) -> AbstractMemento:
