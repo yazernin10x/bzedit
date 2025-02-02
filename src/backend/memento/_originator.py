@@ -33,4 +33,4 @@ class Originator(AbstractOriginator):
 
         self._engine.insert(memento.buffer)
         selection.start = memento.start
-        selection.end = memento.end
+        selection.end = memento.end - 1
